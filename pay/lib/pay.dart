@@ -22,3 +22,5 @@ export 'package:pay_mobile/pay_mobile.dart'
 
 part 'src/pay.dart';
 part 'src/widgets/google_pay_button.dart';
+part 'src/widgets/apple_pay_button.dart';
+part 'src/widgets/pay_button.dart';

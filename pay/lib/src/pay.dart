@@ -12,6 +12,8 @@ class Pay {
   Future? _initializationFuture;
   late final PaymentConfiguration _paymentConfiguration;
 
+  PaymentConfiguration get paymentConfiguration => _paymentConfiguration;
+
   Pay._(Map<String, dynamic> paymentConfiguration)
       : _payPlatform = PayMethodChannel() {
     _paymentConfiguration = PaymentConfiguration.fromMap(paymentConfiguration);
@@ -34,8 +36,8 @@ class Pay {
           'assets/$paymentConfigurationAsset', (s) async => jsonDecode(s));
 
   Future _loadPaymentConfiguration() async {
-    _paymentConfiguration =
-        PaymentConfiguration.fromMap(await _initializationFuture);
+    final profileJson = await _initializationFuture;
+    _paymentConfiguration = PaymentConfiguration.fromMap(profileJson);
   }
 
   Future<Map<String, dynamic>> get paymentData async {

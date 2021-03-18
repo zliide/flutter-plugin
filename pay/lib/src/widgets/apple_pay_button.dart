@@ -1,8 +1,7 @@
 part of '../../pay.dart';
 
-class GooglePayButton extends StatelessWidget {
-  
-    const GooglePayButton({
+class ApplePayButton extends StatelessWidget {
+  const ApplePayButton({
     Key? key,
     required this.client,
     required this.onPressed,
@@ -10,10 +9,10 @@ class GooglePayButton extends StatelessWidget {
     this.childOnError,
     this.childOnLoading,
     this.type,
-    this.color,
+    this.style,
   }) : super(key: key);
 
-  GooglePayButton.fromAsset({
+  ApplePayButton.fromAsset({
     Key? key,
     required String assetName,
     required this.onPressed,
@@ -21,19 +20,18 @@ class GooglePayButton extends StatelessWidget {
     this.childOnError,
     this.childOnLoading,
     this.type,
-    this.color,
+    this.style,
   })  : client = Pay.fromAsset(assetName),
         super(key: key);
-  
-  
+
   final Pay client;
   final Function(Object?)? onError;
   final Widget? childOnError;
   final Widget? childOnLoading;
   final PayGestureTapCallback onPressed;
 
-  final GooglePayButtonType? type;
-  final GooglePayButtonColor? color;
+  final ApplePayButtonType? type;
+  final ApplePayButtonStyle? style;
 
   @override
   Widget build(BuildContext context) {
@@ -47,8 +45,8 @@ class GooglePayButton extends StatelessWidget {
         Provider.google_pay,
       ],
       style: PayButtonStyle(
-        googlePayColor: color,
-        googlePayType: type,
+        applePayStyle: style,
+        applePayType: type,
       ),
     );
   }
