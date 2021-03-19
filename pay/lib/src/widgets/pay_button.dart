@@ -14,13 +14,6 @@ class PayButtonStyle {
     this.applePayStyle,
     this.applePayType,
   });
-
-  static const PayButtonStyle defaultStyle = PayButtonStyle(
-    googlePayColor: GooglePayButtonColor.black,
-    googlePayType: GooglePayButtonType.pay,
-    applePayType: ApplePayButtonType.buy,
-    applePayStyle: ApplePayButtonStyle.automatic,
-  );
 }
 
 class PayButton extends StatefulWidget {
