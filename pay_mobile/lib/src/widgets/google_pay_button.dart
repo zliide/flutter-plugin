@@ -1,5 +1,9 @@
 part of '../../pay_mobile.dart';
 
+const GooglePayButtonColor kDefaultGooglePayButtonColor =
+    GooglePayButtonColor.black;
+const GooglePayButtonType kDefaultGooglePayButtonType = GooglePayButtonType.pay;
+
 enum GooglePayButtonType { pay, checkout, donate }
 enum GooglePayButtonColor { black, white, flat }
 
@@ -34,6 +38,10 @@ extension on GooglePayButtonColor {
         GooglePayButtonColor.flat: '_clear',
       }[this] ??
       _defaultAssetSuffix;
+
+  Color get color {
+    return this == GooglePayButtonColor.black ? Colors.black : Colors.white;
+  }
 }
 
 class RawGooglePayButton extends StatelessWidget {
@@ -41,8 +49,8 @@ class RawGooglePayButton extends StatelessWidget {
   static const double _minHorizontalPadding = 30;
 
   final GestureTapCallback onPressed;
-  final GooglePayButtonType type;
-  final GooglePayButtonColor color;
+  final GooglePayButtonType? type;
+  final GooglePayButtonColor? color;
 
   const RawGooglePayButton({
     Key? key,
@@ -53,9 +61,10 @@ class RawGooglePayButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final type = this.type ?? kDefaultGooglePayButtonType;
+    final color = this.color ?? kDefaultGooglePayButtonColor;
     final Widget rawButton = RawMaterialButton(
-      fillColor:
-          color == GooglePayButtonColor.black ? Colors.black : Colors.white,
+      fillColor: color.color,
       elevation: 0,
       focusElevation: 0,
       hoverElevation: 0,

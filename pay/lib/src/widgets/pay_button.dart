@@ -8,12 +8,19 @@ class PayButtonStyle {
   final ApplePayButtonStyle? applePayStyle;
   final ApplePayButtonType? applePayType;
 
-  PayButtonStyle({
+  const PayButtonStyle({
     this.googlePayColor,
     this.googlePayType,
     this.applePayStyle,
     this.applePayType,
   });
+
+  static const PayButtonStyle defaultStyle = PayButtonStyle(
+    googlePayColor: GooglePayButtonColor.black,
+    googlePayType: GooglePayButtonType.pay,
+    applePayType: ApplePayButtonType.buy,
+    applePayStyle: ApplePayButtonStyle.automatic,
+  );
 }
 
 class PayButton extends StatefulWidget {
@@ -82,16 +89,14 @@ class _PayButtonState extends State<PayButton> {
           switch (provider) {
             case Provider.google_pay:
               return RawGooglePayButton(
-                type: widget.style?.googlePayType ?? GooglePayButtonType.pay,
-                color:
-                    widget.style?.googlePayColor ?? GooglePayButtonColor.black,
+                type: widget.style?.googlePayType,
+                color: widget.style?.googlePayColor,
                 onPressed: () => widget.onPressed(widget.client),
               );
             case Provider.apple_pay:
               return RawApplePayButton(
-                type: widget.style?.applePayType ?? ApplePayButtonType.buy,
-                style: widget.style?.applePayStyle ??
-                    ApplePayButtonStyle.automatic,
+                type: widget.style?.applePayType,
+                style: widget.style?.applePayStyle,
                 onPressed: () => widget.onPressed(widget.client),
               );
           }

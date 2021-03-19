@@ -1,6 +1,9 @@
 part of '../../pay_mobile.dart';
 
 const double kApplePayButtonDefaultHeight = 48.0;
+const ApplePayButtonStyle kDefaultApplePayButtonStyle =
+    ApplePayButtonStyle.automatic;
+const ApplePayButtonType kDefaultApplePayButtonType = ApplePayButtonType.plain;
 
 enum ApplePayButtonType {
   plain,
@@ -29,15 +32,15 @@ enum ApplePayButtonStyle {
 }
 
 class RawApplePayButton extends StatelessWidget {
-  final ApplePayButtonStyle style;
-  final ApplePayButtonType type;
+  final ApplePayButtonStyle? style;
+  final ApplePayButtonType? type;
   final VoidCallback? onPressed;
   final BoxConstraints constraints;
 
   RawApplePayButton({
     Key? key,
-    this.style = ApplePayButtonStyle.black,
-    this.type = ApplePayButtonType.plain,
+    this.style,
+    this.type,
     this.onPressed,
     double? width,
     double? height = kApplePayButtonDefaultHeight,
@@ -58,8 +61,8 @@ class RawApplePayButton extends StatelessWidget {
       case TargetPlatform.iOS:
         return _UiKitApplePayButton(
           onPressed: onPressed,
-          type: type,
-          style: style,
+          type: type ?? kDefaultApplePayButtonType,
+          style: style ?? kDefaultApplePayButtonStyle,
         );
       default:
         throw UnsupportedError(
@@ -92,7 +95,7 @@ class _UiKitApplePayButtonState extends State<_UiKitApplePayButton> {
   @override
   Widget build(BuildContext context) {
     final int type = _mapButtonType(widget.type);
-    final int style = mapButtonStyle(widget.style);
+    final int style = _mapButtonStyle(widget.style);
 
     return UiKitView(
       viewType: 'plugins.flutter.io/pay/apple_pay',
@@ -113,7 +116,7 @@ class _UiKitApplePayButtonState extends State<_UiKitApplePayButton> {
   void didUpdateWidget(covariant _UiKitApplePayButton oldWidget) {
     if (widget.style != oldWidget.style || widget.type != oldWidget.type) {
       final int type = _mapButtonType(widget.type);
-      final int style = mapButtonStyle(widget.style);
+      final int style = _mapButtonStyle(widget.style);
       methodChannel?.invokeMethod('updateStyle', {
         'type': type,
         'style': style,
@@ -162,7 +165,7 @@ int _mapButtonType(ApplePayButtonType type) {
   }
 }
 
-int mapButtonStyle(ApplePayButtonStyle style) {
+int _mapButtonStyle(ApplePayButtonStyle style) {
   switch (style) {
     case ApplePayButtonStyle.white:
       return 0;
