@@ -41,7 +41,7 @@ dependencies:
     git:
       url: https://github.com/zliide/flutter-plugin.git
       path: pay_ios
-      ref: deba010
+      ref: 01b2494
   pay_platform_interface: ^1.0.2
   meta: ^1.3.0
 
