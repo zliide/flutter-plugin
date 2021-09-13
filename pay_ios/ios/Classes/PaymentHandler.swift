@@ -132,13 +132,13 @@ class PaymentHandler: NSObject {
       if let statusString = item["status"] {
         return PKPaymentSummaryItem(
           label: item["label"] as! String ,
-          amount: NSDecimalNumber(string: (item["amount"] as! String)),
+          amount: NSDecimalNumber(value: Double(item["amount"] as! String)!),
           type: PKPaymentSummaryItemType.fromString(statusString as! String))
       }
       
       return PKPaymentSummaryItem(
         label: item["label"] as! String,
-        amount: NSDecimalNumber(string: (item["amount"] as! String)))
+        amount: NSDecimalNumber(value: Double(item["amount"] as! String)!))
     }
     
     // Configure the payment.
