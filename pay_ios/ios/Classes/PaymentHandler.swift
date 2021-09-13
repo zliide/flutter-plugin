@@ -200,13 +200,8 @@ extension PaymentHandler: PKPaymentAuthorizationControllerDelegate {
   func paymentAuthorizationControllerDidFinish(_ controller: PKPaymentAuthorizationController) {
     controller.dismiss {
       DispatchQueue.main.async {
-        // There was no attempt to authorize.
-        if self.paymentHandlerStatus == .presented {
+        if self.paymentHandlerStatus == .presented || self.paymentHandlerStatus == .authorizationStarted {
           self.paymentResult("{}")
-        }
-        // Authorization started, but it did not succeed
-        if self.paymentHandlerStatus == .authorizationStarted {
-          self.paymentResult(FlutterError(code: "paymentFailed", message: "Failed to complete the payment", details: nil))
         }
       }
     }
